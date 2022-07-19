@@ -5,7 +5,7 @@
       class="bg-main1 color-white pt30 pb30 flex flex-around text-center fs20"
     >
       <div>
-        <div class="fs15 pb15 color-main2">总充电量1</div>
+        <div class="fs15 pb15 color-main2">总充电量</div>
         <div class="color-assist1">10134.00 <span class="fs10">kwh</span></div>
       </div>
       <div>
