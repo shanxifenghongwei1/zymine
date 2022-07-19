@@ -23,13 +23,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/styles/anminestyle/variable/color.scss";
+
 .app-main {
   /* 50= navbar  50  */
   min-height: calc(100vh - 50px);
   width: 100%;
   position: relative;
   overflow: hidden;
-  background: rgb(0, 0, 0);
+  background: #000;
+  // background: $colorblacks;
 }
 
 .fixed-header + .app-main {
