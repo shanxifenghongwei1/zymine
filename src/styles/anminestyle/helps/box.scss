@@ -11,6 +11,10 @@
   -webkit-flex-grow: 1;
   flex-grow: 1;
 }
+.flex-grow-2 {
+  -webkit-flex-grow: 2;
+  flex-grow: 2;
+}
 
 // flex-direction 属性决定主轴的方向（即项目的排列方向）。
 .flex-row {

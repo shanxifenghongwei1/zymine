@@ -17,7 +17,9 @@ import i18n from "./lang"; // internationalization
 import "./icons"; // icon
 import "./permission"; // permission control
 import "./utils/error-log"; // error log
+// 引入大屏 DataV
 import dataV from "@jiaminghi/data-view";
+
 import * as filters from "./filters"; // global filters
 
 /**
