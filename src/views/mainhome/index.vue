@@ -23,11 +23,11 @@
     </div>
     <!-- 下面的盒子 -->
     <div>
-      <img
+      <!-- <img
         style="width: 100%; height: 100%"
         src="@/assets/img/sltp/slpts1.jpg"
-      />
-      <!-- <el-image :src="ulsb"></el-image> -->
+      /> -->
+      <div class="linetest"></div>
     </div>
   </div>
 </template>
@@ -38,16 +38,45 @@ export default {
   components: {},
   data() {
     return {
-      ulsb: "@/assets/img/sltp/slpts1.jpg",
-      urlsa:
-        "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.jj20.com%2Fup%2Fallimg%2F4k%2Fs%2F02%2F2109242306111155-0-lp.jpg&refer=http%3A%2F%2Fimg.jj20.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1660729026&t=e76b76e9f71dabcb7e181eff580a8053",
+      context: {},
     };
   },
+  mounted() {},
   computed: {},
   created() {},
 };
 </script>
 <style scoped lang="scss">
+.linetest {
+  height: 10px;
+  width: 100px;
+  background: #fff;
+  position: relative;
+}
+.linetest::after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  animation: infinite nobiru linear 5s none !important;
+  background-color: rgb(68, 47, 255);
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+}
+
+@keyframes nobiru {
+  0% {
+    left: 0px;
+  }
+  99% {
+    left: 100px;
+  }
+  100% {
+    left: 0px;
+  }
+}
 .mainhomes {
   /* background: #000; */
   /* width: 100%; */

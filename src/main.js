@@ -22,6 +22,8 @@ import dataV from "@jiaminghi/data-view";
 
 import * as filters from "./filters"; // global filters
 
+import * as echarts from "echarts";
+
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api
@@ -44,7 +46,17 @@ Vue.use(dataV);
 Object.keys(filters).forEach((key) => {
   Vue.filter(key, filters[key]);
 });
+// import { toggleClass } from "@/utils";
 
+// // 修改整体文档颜色
+// toggleClass(document.body, "custom-theme");
+// // 修改主题色
+// store.dispatch("settings/changeSetting", {
+//   key: "theme",
+//   value: "#00c8c8",
+// });
+
+Vue.prototype.$echarts = echarts;
 Vue.config.productionTip = false;
 
 new Vue({

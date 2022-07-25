@@ -112,6 +112,19 @@ export const constantRoutes = [
       },
     ],
   },
+  // 电站列表
+  {
+    path: "/stationsList",
+    component: Layout,
+    children: [
+      {
+        path: "index",
+        component: () => import("@/views/stationsList/index"),
+        name: "stationsList",
+        meta: { title: "电站列表", icon: "list", noCache: true },
+      },
+    ],
+  },
   {
     path: "/",
     component: Layout,

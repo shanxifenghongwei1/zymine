@@ -25,7 +25,6 @@
 
 <script>
 import cityMap from "@/utils/china-main-city-map.js";
-import * as echarts from "echarts";
 
 import { mapState } from "vuex";
 import sidebar from "@/layout/components/Sidebar/index.vue";
@@ -80,7 +79,7 @@ export default {
       // .then((response) => {
       const mapJson = response;
       this.chinaJson = mapJson;
-      this.myChart = echarts.init(document.getElementById("sures"));
+      this.myChart = this.$echarts.init(document.getElementById("sures"));
       this.registerAndsetOption(
         this.myChart,
         this.chinaId,
@@ -121,7 +120,7 @@ export default {
     },
 
     registerAndsetOption(myChart, id, name, mapJson, flag) {
-      echarts.registerMap(name, mapJson);
+      this.$echarts.registerMap(name, mapJson);
       myChart.setOption({
         series: [
           {

@@ -5,18 +5,20 @@
 </template>
 
 <script>
-import { toggleClass } from "@/utils";
+// import { toggleClass } from "@/utils";
 export default {
   name: "App",
   created() {
-    // 修改整体文档颜色
-    toggleClass(document.body, "custom-theme");
-    // 修改主题色
-    this.$store.dispatch("settings/changeSetting", {
-      key: "theme",
-      value: "#304156",
-    });
     // #304156
+  },
+  mounted() {
+    // // 修改整体文档颜色
+    // toggleClass(document.body, "custom-theme");
+    // // 修改主题色
+    // this.$store.dispatch("settings/changeSetting", {
+    //   key: "theme",
+    //   value: "#00c8c8",
+    // });
   },
 };
 </script>
@@ -27,4 +29,29 @@ export default {
   box-sizing: border-box;
 }
 @import "styles/anminestyle/base.scss";
+
+.el-select-dropdown {
+  border-color: #00c8c8;
+  // 下拉框出来的每个item
+  .el-select-dropdown__item.hover {
+    background: #00c8c8;
+    color: #fff;
+  }
+  .el-select-dropdown__item {
+    color: #fff;
+  }
+}
+.popper__arrow::after {
+  border-bottom-color: #00c8c8 !important;
+}
+.el-popper {
+  background: #204767 !important;
+  color: #fff;
+}
+.el-input__inner {
+  background: #204767;
+  color: #fff;
+  border: none;
+  border-radius: 0;
+}
 </style>
