@@ -45,13 +45,40 @@ export default {
   border-bottom-color: #00c8c8 !important;
 }
 .el-popper {
-  background: #204767 !important;
+  background: #7fb926 !important;
   color: #fff;
+  .el-dropdown-menu__item {
+    color: #fff;
+  }
 }
 .el-input__inner {
   background: #204767;
   color: #fff;
   border: none;
   border-radius: 0;
+}
+
+// 表格
+.el-table {
+  tr {
+    background: #204767;
+    color: #fff;
+  }
+  td {
+    border: none !important;
+  }
+  th {
+    background: #204767;
+    border: none !important;
+  }
+  .slecleRowColor {
+    background: #204767 !important;
+  }
+  tbody tr:hover > td {
+    background-color: #00c8c8 !important;
+  }
+}
+.el-table::before {
+  background: none !important;
 }
 </style>

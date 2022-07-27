@@ -28,6 +28,8 @@
         src="@/assets/img/sltp/slpts1.jpg"
       /> -->
       <div class="linetest"></div>
+
+      <canvas id="canvas"></canvas>
     </div>
   </div>
 </template>
@@ -41,7 +43,32 @@ export default {
       context: {},
     };
   },
-  mounted() {},
+  mounted() {
+    this.canvasinit();
+  },
+  methods: {
+    canvasinit() {
+      var canvas = document.getElementById("canvas");
+
+      var ctx = canvas.getContext("2d");
+      ctx.beginPath();
+      ctx.strokeStyle = "#ff5043";
+      ctx.lineWidth = 8;
+      ctx.lineCap = "butt";
+      ctx.moveTo(10, 20);
+      ctx.lineTo(310, 20);
+
+      ctx.moveTo(80, 20);
+      ctx.lineTo(80, 300);
+
+      ctx.font = "15px serif";
+      ctx.fillStyle = "#fff";
+      ctx.fillText("P:2.7kw", 10, 60);
+      ctx.fillText("U:394.8V", 10, 80);
+      ctx.fillText("I:4.9A", 10, 100);
+      ctx.stroke();
+    },
+  },
   computed: {},
   created() {},
 };

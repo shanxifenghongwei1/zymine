@@ -11,7 +11,7 @@
 
     <div class="right-menu">
       <template v-if="device !== 'mobile'">
-        <search id="header-search" class="right-menu-item" />
+        <!-- <search id="header-search" class="right-menu-item" /> -->
 
         <error-log class="errLog-container right-menu-item hover-effect" />
 
@@ -25,7 +25,7 @@
           <size-select id="size-select" class="right-menu-item hover-effect" />
         </el-tooltip> -->
 
-        <lang-select class="right-menu-item hover-effect" />
+        <!-- <lang-select class="right-menu-item hover-effect" /> -->
       </template>
 
       <el-dropdown
@@ -36,33 +36,29 @@
           <img :src="avatar + '?imageView2/1/w/80/h/80'" class="user-avatar" />
           <i class="el-icon-caret-bottom" />
         </div>
+
         <el-dropdown-menu slot="dropdown">
-          <router-link to="/profile/index">
+          <!-- //个人中心 -->
+          <!-- <router-link to="/profile/index">
             <el-dropdown-item>
               {{ $t("navbar.profile") }}
             </el-dropdown-item>
-          </router-link>
-          <router-link to="/">
+          </router-link> -->
+          <!-- 首页 -->
+          <!-- <router-link to="/">
             <el-dropdown-item>
               {{ $t("navbar.dashboard") }}
             </el-dropdown-item>
-          </router-link>
-          <a
-            target="_blank"
-            href="https://github.com/PanJiaChen/vue-element-admin/"
-          >
-            <el-dropdown-item>
-              {{ $t("navbar.github") }}
-            </el-dropdown-item>
-          </a>
-          <a
+          </router-link> -->
+          <!-- 文档 -->
+          <!-- <a
             target="_blank"
             href="https://panjiachen.github.io/vue-element-admin-site/#/"
           >
             <el-dropdown-item>Docs</el-dropdown-item>
-          </a>
-          <el-dropdown-item divided @click.native="logout">
-            <span style="display: block">{{ $t("navbar.logOut") }}</span>
+          </a> -->
+          <el-dropdown-item @click.native="logout">
+            <span style="display: block">退出登录</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>

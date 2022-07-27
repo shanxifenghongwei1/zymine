@@ -78,25 +78,30 @@ export const constantRoutes = [
     component: () => import("@/views/error-page/401"),
     hidden: true,
   },
-  // 大屏页面
-  {
-    path: "/bighome",
-    component: Layout,
-    children: [
-      {
-        path: "bighome",
-        redirect: "/bighomea",
-        component: () => import("@/views/bighome/indexnone.vue"),
-        name: "bighome",
-        meta: { title: "大屏", icon: "bighomes", noCache: true },
-      },
-    ],
-  },
+  // // 大屏页面
+  // {
+  //   path: "/bighome",
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: "bighome",
+  //       redirect: "/bighomea",
+  //       component: () => import("@/views/bighome/indexnone.vue"),
+  //       name: "bighome",
+  //       meta: { title: "大屏", icon: "bighomes", noCache: true },
+  //     },
+  //   ],
+  // },
   // 大屏页面 详细
   {
     path: "/bighomea",
     component: () => import("@/views/bighome/index"),
-    hidden: true,
+    meta: {
+      activeMenu: "/bighomea",
+      title: "大屏",
+      icon: "bighomes",
+    },
+    hidden: false,
   },
 
   // 系统主界面
@@ -108,7 +113,12 @@ export const constantRoutes = [
         path: "index",
         component: () => import("@/views/mainhome/index"),
         name: "mainhome",
-        meta: { title: "系统主界面", icon: "mainhome", affix: true },
+        meta: {
+          title: "系统主界面",
+          icon: "mainhome",
+          noCache: true,
+          affix: true,
+        },
       },
     ],
   },

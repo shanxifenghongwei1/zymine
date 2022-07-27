@@ -34,6 +34,15 @@
 .color-light{
   color: $light !important;
 }
+
+
+.color-textnocolor{
+  color: $textnocolor!important;
+}
+.color-colortexts{
+  color: $colortexts !important;
+}
+
 .color-middle {
   color: $middle !important;
   [data-theme="black"] & {
@@ -52,6 +61,9 @@
     color: #1a1a1a !important;
   }
 }
+
+
+
 
 // 绿色渐变按钮
 .bg-gradient {
@@ -168,4 +180,8 @@
 }
 .bg-none {
   background: none !important;
+}
+
+.bg-bgcardcolor {
+  background: $bgcardcolor !important;
 }
