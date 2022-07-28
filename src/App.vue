@@ -30,29 +30,41 @@ export default {
 }
 @import "styles/anminestyle/base.scss";
 
+// select 弹窗的scc 设置
 .el-select-dropdown {
-  border-color: #00c8c8;
+  // border-color: #00c8c8;
+  border: none;
   // 下拉框出来的每个item
   .el-select-dropdown__item.hover {
-    background: #00c8c8;
+    background: #393948;
     color: #fff;
   }
   .el-select-dropdown__item {
     color: #fff;
   }
 }
-.popper__arrow::after {
-  border-bottom-color: #00c8c8 !important;
+
+// 上面那个小三角形
+.popper__arrow {
+  border: none !important;
 }
+
+.popper__arrow::after {
+  border-bottom: 0px !important;
+  // border-bottom-color: #00c8c8 !important;
+  border: none;
+}
+// 下面选项
 .el-popper {
-  background: #7fb926 !important;
+  background: #2d2d2d;
   color: #fff;
   .el-dropdown-menu__item {
     color: #fff;
   }
 }
+
 .el-input__inner {
-  background: #204767;
+  background: rgba($color: #000000, $alpha: 0);
   color: #fff;
   border: none;
   border-radius: 0;

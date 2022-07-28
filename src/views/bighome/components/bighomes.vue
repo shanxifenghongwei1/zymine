@@ -217,7 +217,92 @@
           <div class="flex flex-between hit53 pt20">
             <!-- 左边的地图盒子 -->
             <div class="bg-bgcardcolor wit66">
-              <div class="hit80 bgmaptop pl25 pr25 pt10">地图查询</div>
+              <!-- 地图查询的搜索模块 -->
+              <div class="hit80 bgmaptop pl25 pr25 pt10 flex flex-between">
+                <div>
+                  <div class="flex align-items-center">
+                    <div class="mr10" style="line-height: 40px; width: 90px">
+                      地图查询
+                    </div>
+                    <el-input
+                      placeholder="请输入电站名称或者级联SN"
+                      class="bg-bgcardcolor"
+                      prefix-icon="el-icon-search"
+                      v-model="input2"
+                    >
+                    </el-input>
+                  </div>
+                  <div style="height: 30px"></div>
+                </div>
+                <!-- 级联选择 -->
+                <div>
+                  <div class="flex">
+                    <el-select
+                      class="bg-bgcardcolor mr15"
+                      v-model="value1"
+                      placeholder="全部控制策略"
+                    >
+                      <el-option
+                        v-for="item in optionsa"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value"
+                      >
+                      </el-option>
+                    </el-select>
+                    <!-- 省 -->
+                    <el-select
+                      class="bg-bgcardcolor mr15"
+                      v-model="value"
+                      placeholder="请选择省"
+                      @change="changeproview"
+                    >
+                      <el-option
+                        v-for="item in anysityList"
+                        :key="item.id"
+                        :label="item.name"
+                        :value="item.indexlit"
+                      >
+                      </el-option>
+                    </el-select>
+
+                    <!-- 市 -->
+                    <el-select
+                      class="bg-bgcardcolor"
+                      v-model="value2"
+                      placeholder="请选择市"
+                      @change="changechengshi"
+                    >
+                      <el-option
+                        v-for="item in chengshiList"
+                        :key="item.id"
+                        :label="item.name"
+                        :value="item.indexlit"
+                      >
+                      </el-option>
+                    </el-select>
+                  </div>
+                  <!-- 下面的选择日期 -->
+                  <div class="nishi flex">
+                    <el-input
+                      placeholder="请选择时间"
+                      v-model="input4"
+                      :disabled="true"
+                    >
+                      <i slot="prefix" class="el-input__icon el-icon-date"></i>
+                    </el-input>
+                    <div>至</div>
+                    <el-input
+                      placeholder="请选择时间"
+                      v-model="input4"
+                      :disabled="true"
+                    >
+                      <i slot="prefix" class="el-input__icon el-icon-date"></i>
+                    </el-input>
+                  </div>
+                </div>
+                <div>查询</div>
+              </div>
               <div class="pl25 pr25 flex flex-betwween">
                 <div id="sures"></div>
                 <div>CO2 减排</div>
@@ -234,7 +319,7 @@
 
 <script>
 import cityMap from "@/utils/china-main-city-map.js";
-
+import chinamaps from "/static/json/map/100000.json";
 import { mapState, mapGetters } from "vuex";
 import sidebar from "@/layout/components/Sidebar/index.vue";
 import Screenfull from "@/components/Screenfull";
@@ -256,9 +341,60 @@ export default {
       parentName: null,
       //Echarts地图全局变量，主要是在返回上级地图的方法中会用到
       myChart: null,
+      anysityList: [], //省级的数据
+      chengshiList: [], //市级的数据
+      // 策略
+      optionsa: [
+        {
+          value: "选项1",
+          label: "自发自用",
+        },
+        {
+          value: "选项2",
+          label: "峰谷套利",
+        },
+        {
+          value: "选项3",
+          label: "削峰填谷",
+        },
+      ],
+      value1: "", // 策略选中数据
+
+      input2: "", // 地图查询
+      options: {},
+      value: "", //省级的选中数据
+      value2: "", // 市级的选中数据
+      input4: "", //下面的日历时间
     };
   },
   methods: {
+    // 选择省之后的结果
+    changeproview(e) {
+      let name = this.anysityList[e].name;
+      let cityId = cityMap[name];
+      if (cityId) {
+        //代表有下级地图
+        let response = require(`/static/json/map/${cityId}.json`);
+        this.chengshiList = this.initDataList(response);
+        const mapJson = response;
+        // console.log(response, "市级的数据");
+        this.registerAndsetOption(this.myChart, cityId, name, mapJson, true);
+      }
+    },
+    // 选择市级以后的
+    changechengshi(e) {
+      console.log(e, "市级下面的数据");
+      let name = this.chengshiList[e].name;
+      let cityId = cityMap[name];
+      if (cityId) {
+        //代表有下级地图
+        let response = require(`/static/json/map/${cityId}.json`);
+        // this.chengshiList = this.initDataList(response)
+        const mapJson = response;
+        console.log(response, "市级下面的数据");
+        this.registerAndsetOption(this.myChart, cityId, name, mapJson, true);
+      }
+    },
     // 退出登录
     async logout() {
       await this.$store.dispatch("user/logout");
@@ -287,7 +423,7 @@ export default {
 
     mapChart() {
       let response = require(`/static/json/map/${this.chinaId}.json`);
-      console.log(response, "这是文件");
+
       // axios
       //   .get("./static/json/map/" + this.chinaId + ".json", {})
       // .then((response) => {
@@ -304,6 +440,7 @@ export default {
       this.parentId = this.chinaId;
       this.parentName = "china";
       this.myChart.on("click", (param) => {
+        // console.log("这是点击后的返回值", param);
         var cityId = cityMap[param.name];
         if (cityId) {
           //代表有下级地图
@@ -441,6 +578,20 @@ export default {
       }
       return mapData;
     },
+    initDataList(datain) {
+      console.log(datain, "这是文件");
+      let a = [];
+      datain.features.forEach((item, index) => {
+        a.push({
+          id: item.id,
+          name: item.properties.name,
+          listlength: item.properties.childNum,
+          cp: item.properties.cp,
+          indexlit: index,
+        });
+      });
+      return a;
+    },
   },
   mounted() {
     setTimeout(() => {
@@ -461,11 +612,19 @@ export default {
       };
     },
   },
+  created() {
+    this.anysityList = this.initDataList(chinamaps);
+  },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+.nishi {
+  .is-disabled {
+    background: #353542;
+  }
+}
 .left-small-box {
   width: 5px;
   height: 30px;

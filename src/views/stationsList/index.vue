@@ -15,7 +15,11 @@
       </div>
 
       <div class="b-a-1 line-color-assist10 flex-1">
-        <el-input v-model="input" placeholder="请输入内容"></el-input>
+        <el-input
+          style="background: #063155"
+          v-model="input"
+          placeholder="请输入内容"
+        ></el-input>
       </div>
 
       <div class="b-a-1 line-color-assist10">
