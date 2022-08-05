@@ -17,7 +17,7 @@
               <div class="fs23 pt20">卓阳能源集团综合能源管理平台</div>
               <div class="pt10 color-colortexts">
                 <i class="el-icon-location-outline fs20" /> 中国
-                <span>数据跟新时间 20222年</span>
+                <span>数据跟新时间 {{ timetotop }}</span>
               </div>
             </div>
             <!-- 右边头像 -->
@@ -218,7 +218,7 @@
             <!-- 左边的地图盒子 -->
             <div class="bg-bgcardcolor wit66">
               <!-- 地图查询的搜索模块 -->
-              <div class="hit80 bgmaptop pl25 pr25 pt10 flex flex-between">
+              <div class="hit90 bgmaptop pl25 pr25 pt10 pb10 flex flex-between">
                 <div>
                   <div class="flex align-items-center">
                     <div class="mr10" style="line-height: 40px; width: 90px">
@@ -283,30 +283,55 @@
                     </el-select>
                   </div>
                   <!-- 下面的选择日期 -->
-                  <div class="nishi flex">
-                    <el-input
-                      placeholder="请选择时间"
+                  <div class="nishi mt10 bg-bgcardcolor" @click="changetime">
+                    <el-date-picker
                       v-model="input4"
-                      :disabled="true"
+                      type="daterange"
+                      range-separator="至"
+                      start-placeholder="开始日期"
+                      end-placeholder="结束日期"
                     >
-                      <i slot="prefix" class="el-input__icon el-icon-date"></i>
-                    </el-input>
-                    <div>至</div>
-                    <el-input
-                      placeholder="请选择时间"
-                      v-model="input4"
-                      :disabled="true"
-                    >
-                      <i slot="prefix" class="el-input__icon el-icon-date"></i>
-                    </el-input>
+                    </el-date-picker>
                   </div>
                 </div>
-                <div>查询</div>
+                <div class="text-center bloker">查询</div>
               </div>
               <div class="pl25 pr25 flex flex-betwween">
                 <div id="sures"></div>
-                <div>CO2 减排</div>
+                <!-- CO₂减排 -->
+                <div style="width: 50%">
+                  <div class="flex pt15">
+                    <div class="flex flex-col text-center flex-1">
+                      <div class="fs18 color-textnocolor">CO₂减排</div>
+                      <div class="fs20 pt15 pb10 fw600">117.78</div>
+                      <div class="fs17 color-colortexts">t</div>
+                    </div>
+
+                    <div class="flex flex-col text-center flex-1">
+                      <div class="fs17 color-textnocolor">累计节碳</div>
+                      <div class="fs20 pt15 pb10 fw600">54.78</div>
+                      <div class="fs17 color-colortexts">t</div>
+                    </div>
+
+                    <div class="flex flex-col text-center flex-1">
+                      <div class="fs17 color-textnocolor">等效造林</div>
+                      <div class="fs20 pt15 pb10 fw600">23.45</div>
+                      <div class="fs17 color-colortexts">ha</div>
+                    </div>
+                  </div>
+                  <!-- 下面的环形图 -->
+                  <div id="piebox"></div>
+                </div>
               </div>
+            </div>
+
+            <!-- 右下角的图 -->
+            <div class="bg-bgcardcolor wit32">
+              <div class="flex flex-between bgmaptop p25 align-items-center">
+                <div class="fs20">车辆soc分布</div>
+                <div>{{ timetotop }}</div>
+              </div>
+              <div id="categorysoc"></div>
             </div>
           </div>
 
@@ -358,16 +383,21 @@ export default {
           label: "削峰填谷",
         },
       ],
+
       value1: "", // 策略选中数据
 
       input2: "", // 地图查询
       options: {},
       value: "", //省级的选中数据
       value2: "", // 市级的选中数据
-      input4: "", //下面的日历时间
+      input4: "", //下面的日历开始时间
+      input5: "", //下面日历的结束时间
+      timetotop: "获取中..", // 时间
+      intervals: null,
     };
   },
   methods: {
+    changetime() {},
     // 选择省之后的结果
     changeproview(e) {
       let name = this.anysityList[e].name;
@@ -592,10 +622,163 @@ export default {
       });
       return a;
     },
+
+    // categorysoc
+    initCategorySoc() {
+      let chartDom = document.getElementById("categorysoc");
+      let myChart = this.$echarts.init(chartDom);
+
+      let option = {
+        tooltip: {
+          trigger: "axis",
+          axisPointer: {
+            type: "shadow",
+          },
+        },
+        xAxis: {
+          type: "category",
+          show: true,
+          nameTextStyle: {
+            color: "#fff",
+            fontSize: 15,
+            backgroundColor: "#fff",
+          },
+          lineStyle: {
+            color: "#7fb926",
+            width: 10,
+            type: "solid",
+          },
+
+          // 是否展示坐标轴
+          axisLine: {
+            show: true,
+          },
+          axisTick: {
+            show: true,
+            alignWithLabel: true,
+          },
+          axisLabel: {
+            color: "#fff",
+          },
+          data: ["10", "20", "30", "40", "50", "60", "70"],
+        },
+        yAxis: {
+          type: "value",
+          show: true,
+          axisLabel: {
+            color: "#fff",
+          },
+          alignTicks: false,
+          position: "left",
+          // axisLine: {
+          //   show: false,
+          // },
+          // axisTick: {
+          //   show: false,
+          // },
+          splitLine: {
+            show: false,
+          },
+        },
+        series: [
+          {
+            data: [200, 400, 600, 800, 1000, 1200, 1300],
+            type: "bar",
+            barWidth: 15,
+            // showBackground: true,
+            // backgroundStyle: {
+            //   color: "#7fb926",
+            // },
+            color: "#7fb926",
+          },
+        ],
+      };
+
+      myChart.setOption(option);
+    },
+
+    initCategoryPie() {
+      // piebox
+      let chartDom = document.getElementById("piebox");
+      let myChart = this.$echarts.init(chartDom);
+      let option = {
+        tooltip: {
+          trigger: "item",
+        },
+        legend: {
+          icon: "circle",
+          bottom: "1px",
+          textStyle: {
+            color: "#fff",
+          },
+        },
+
+        series: [
+          {
+            name: "状态",
+            type: "pie",
+            radius: ["40%", "70%"],
+            avoidLabelOverlap: false,
+            label: {
+              formatter: "{b} {c}",
+            },
+            data: [
+              { value: 10, name: "运行", itemStyle: { color: "#7fb926" } },
+              { value: 10, name: "规划中", itemStyle: { color: "#04614f" } },
+              { value: 3, name: "离网", itemStyle: { color: "#999898" } },
+              { value: 1, name: "故障", itemStyle: { color: "#d4cd1b" } },
+            ],
+          },
+          {
+            name: "状态",
+            type: "pie",
+            radius: ["40%", "70%"],
+            avoidLabelOverlap: false,
+            label: {
+              show: true,
+              position: "center",
+              fontSize: "10",
+              color: "#fff",
+              formatter: "10/24",
+            },
+            // 环形中间的字
+            emphasis: {
+              // label: {
+              //   show: true,
+              //   fontSize: "10",
+              //   color: "#fff",
+              //   fontWeight: "bold",
+              //   position: "center",
+              //   formatter: "{@Direct}/{c}",
+              // },
+            },
+
+            data: [
+              { value: 10, name: "运行", itemStyle: { color: "#7fb926" } },
+              { value: 10, name: "规划中", itemStyle: { color: "#04614f" } },
+              { value: 3, name: "离网", itemStyle: { color: "#999898" } },
+              { value: 1, name: "故障", itemStyle: { color: "#d4cd1b" } },
+            ],
+          },
+        ],
+      };
+
+      myChart.setOption(option);
+    },
+    timetotops() {
+      this.intervals = setInterval(() => {
+        this.timetotop = new Date().Format("yyyy.MM.dd hh:mm:ss");
+      }, 1000);
+    },
   },
   mounted() {
     setTimeout(() => {
+      // 地图
       this.mapChart();
+      // 右下角的图
+      this.initCategorySoc();
+      // 分析饼图
+      this.initCategoryPie();
     }, 500);
   },
   computed: {
@@ -614,16 +797,45 @@ export default {
   },
   created() {
     this.anysityList = this.initDataList(chinamaps);
+    // 每秒进行时间切换
+    this.timetotops();
+  },
+  destroyed() {
+    window.clearInterval(this.intervals);
   },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
+<style lang="scss">
+/* // 日期选择 */
 .nishi {
-  .is-disabled {
+  .el-date-editor {
+    width: 600px;
+  }
+  .el-range-input {
     background: #353542;
   }
+  .el-range-separator {
+    color: #fff;
+  }
+}
+</style>
+<style scoped lang="scss">
+#categorysoc {
+  width: 530px;
+  height: 380px;
+}
+
+#piebox {
+  width: 400px;
+  height: 220px;
+}
+.bloker {
+  width: 80px;
+  height: 80px;
+  line-height: 80px;
+  background: #353542;
 }
 .left-small-box {
   width: 5px;
@@ -661,7 +873,7 @@ body {
   }
 }
 #sures {
-  width: 500px;
+  width: 700px;
   height: 380px;
   // margin: 0 auto;
 }
@@ -675,8 +887,8 @@ body {
 .hit53 {
   height: 480px;
 }
-.hit80 {
-  height: 80px;
+.hit90 {
+  height: 100px;
 }
 .bgmaptop {
   background: #393948;

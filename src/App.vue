@@ -30,6 +30,15 @@ export default {
 }
 @import "styles/anminestyle/base.scss";
 
+.el-picker-panel__icon-btn {
+  color: #fff;
+}
+
+// 日历中的背景颜色
+.el-date-table td.in-range div {
+  background: #7fb926;
+}
+
 // select 弹窗的scc 设置
 .el-select-dropdown {
   // border-color: #00c8c8;
