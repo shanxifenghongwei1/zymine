@@ -223,7 +223,7 @@ export default {
 .tags-view-container {
   height: 34px;
   width: 100%;
-  background: #000;
+  background: #2d2d2d;
   border-bottom: 1px solid #d8dce5;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 0 3px 0 rgba(0, 0, 0, 0.04);
   .tags-view-wrapper {
@@ -235,7 +235,7 @@ export default {
       line-height: 26px;
       border: 1px solid #d8dce5;
       color: #fff;
-      background: #000;
+      background: #2d2d2d;
       padding: 0 8px;
       font-size: 12px;
       margin-left: 5px;
@@ -247,9 +247,9 @@ export default {
         margin-right: 15px;
       }
       &.active {
-        background-color: #409eff;
+        background-color: #7fb926;
         color: #fff;
-        border-color: #409eff;
+        border-color: #7fb926;
         &::before {
           content: "";
           background: #fff;

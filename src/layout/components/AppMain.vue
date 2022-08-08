@@ -31,7 +31,7 @@ export default {
   width: 100%;
   position: relative;
   overflow: hidden;
-  background: #000;
+  background: #2d2d2d;
   // background: $colorblacks;
 }
 
