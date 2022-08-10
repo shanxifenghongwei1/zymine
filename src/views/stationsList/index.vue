@@ -1,8 +1,8 @@
 <template>
-  <div class="bg-assist4 width-full app-main cloor-white p30">
+  <div class="width-full app-main cloor-white p30">
     <!-- 搜索 -->
-    <div class="sech flex">
-      <div class="b-a-1 line-color-assist10">
+    <div class="sech flex bg-bgcardcolor">
+      <div class="b-a-1 line-color-main2">
         <el-select v-model="value" placeholder="按代码排序">
           <el-option
             v-for="item in options"
@@ -14,15 +14,15 @@
         </el-select>
       </div>
 
-      <div class="b-a-1 line-color-assist10 flex-1">
+      <div class="b-a-1 line-color-main2 flex-1">
         <el-input
-          style="background: #063155"
+          class="bg-bgcardcolor"
           v-model="input"
           placeholder="请输入内容"
         ></el-input>
       </div>
 
-      <div class="b-a-1 line-color-assist10">
+      <div class="b-a-1 line-color-main2">
         <el-select v-model="value1" placeholder="以代码查询">
           <el-option
             v-for="item in options1"
@@ -33,7 +33,7 @@
           </el-option>
         </el-select>
       </div>
-      <div class="b-a-1 line-color-assist10">
+      <div class="b-a-1 line-color-main2 ml20">
         <el-button>查询</el-button>
       </div>
     </div>
@@ -57,35 +57,28 @@
     <div class="pt20">
       <el-table
         :data="tableData"
-        :header-row-style="handstyles"
-        style="width: 50%"
+        :show-header="true"
+        :row-style="handstyles"
+        style="width: 70%"
       >
         <el-table-column label="状态" width="100">
           <template slot-scope="scope">
             <div class="flex">
-              <span
-                v-if="scope.row.date == '全部'"
-                class="rodivs bgcolor1"
-              ></span>
               <div
-                v-if="scope.row.date == '正常'"
-                class="rodivs bgcolor1"
-              ></div>
-              <div
-                v-if="scope.row.date == '警告'"
+                v-if="scope.row.date == '运行'"
                 class="rodivs bgcolor2"
               ></div>
               <div
-                v-if="scope.row.date == '故障'"
+                v-if="scope.row.date == '规划'"
                 class="rodivs bgcolor3"
               ></div>
               <div
-                v-if="scope.row.date == '离线'"
+                v-if="scope.row.date == '故障'"
                 class="rodivs bgcolor4"
               ></div>
               <div
-                v-if="scope.row.date == '规划'"
-                class="rodivs bgcolor1"
+                v-if="scope.row.date == '离网'"
+                class="rodivs bgcolor5"
               ></div>
 
               <!-- <span style="margin-left: 10px">{{ scope.row.date }}</span> -->
@@ -93,6 +86,8 @@
           </template>
         </el-table-column>
         <el-table-column prop="name" label="电站代码" width="180">
+        </el-table-column>
+        <el-table-column prop="name" label="电站名称" width="300">
         </el-table-column>
         <el-table-column prop="address" label="电站容量"> </el-table-column>
       </el-table>
@@ -106,11 +101,10 @@ export default {
     return {
       colorblack: [
         { name: "全部", id: 0 },
-        { name: "正常", id: 1 },
-        { name: "警告", id: 2 },
+        { name: "运行", id: 1 },
+        { name: "规划", id: 2 },
         { name: "故障", id: 3 },
-        { name: "离线", id: 4 },
-        { name: "规划", id: 5 },
+        { name: "离网", id: 4 },
       ],
       colorblackcurrent: 0,
       options: [
@@ -135,13 +129,25 @@ export default {
       ],
       tableData: [
         {
-          date: "正常",
+          date: "运行",
           name: "KSA3222117",
           address: "3000kWh",
           soa: "6",
         },
         {
-          date: "警告",
+          date: "运行",
+          name: "KSA3222117",
+          address: "3000kWh",
+          soa: "6",
+        },
+        {
+          date: "运行",
+          name: "KSA3222117",
+          address: "3000kWh",
+          soa: "6",
+        },
+        {
+          date: "规划",
           name: "KSA3222885",
           address: "80kWh",
           soa: "6",
@@ -153,14 +159,15 @@ export default {
           soa: "6",
         },
         {
-          date: "离线",
+          date: "离网",
           name: "KSA3222117998",
           address: "900kWh",
           soa: "6",
         },
       ],
       handstyles: {
-        backgroundColor: "#333",
+        backgroundColor: "#363543",
+        color: "#c2c3c9",
       },
       value: "",
       value1: "",
@@ -182,31 +189,28 @@ export default {
 }
 .svgcloor1 {
   fill: currentColor;
-  color: #999999;
+  color: rgba($color: #fff, $alpha: 0.5);
 }
 .colblock-1 {
-  width: 100px;
+  width: 172px;
   margin-right: 1px;
   cursor: pointer;
 }
 
 .bgcolor1 {
-  background: #19a3c7;
+  background: #0d386d;
 }
 .bgcolor2 {
-  background: #04cd18;
+  background: #7fb926;
 }
 .bgcolor3 {
-  background: #c38a18;
+  background: #02634f;
 }
 .bgcolor4 {
-  background: #c30e18;
+  background: #d4cd1c;
 }
 .bgcolor5 {
-  background: #999999;
-}
-.bgcolor6 {
-  background: #040ed7;
+  background: #a0a0a0;
 }
 
 .rodivs {
@@ -215,9 +219,9 @@ export default {
   border-radius: 50%;
 }
 .sech {
-  width: 50%;
+  width: 70%;
   .el-button {
-    background: #204767;
+    background: #353542;
     border: none;
     color: #fff;
   }

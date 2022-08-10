@@ -99,7 +99,7 @@
               <!-- 标题数据 -->
               <div class="flex align-items-center">
                 <div class="left-small-box bg-main2 mr20"></div>
-                <div class="fs20">光伏数据</div>
+                <div class="fs20">储能数据</div>
               </div>
               <!-- 接入等数据 -->
               <div class="pt30 flex flex-between pl25 pr25">
@@ -296,6 +296,7 @@
                 </div>
                 <div class="text-center bloker">查询</div>
               </div>
+
               <div class="pl25 pr25 flex flex-betwween">
                 <div id="sures"></div>
                 <!-- CO₂减排 -->
@@ -394,6 +395,8 @@ export default {
       input5: "", //下面日历的结束时间
       timetotop: "获取中..", // 时间
       intervals: null,
+      ischengshi: false,
+      clickcityname: "",
     };
   },
   methods: {
@@ -409,11 +412,16 @@ export default {
         const mapJson = response;
         // console.log(response, "市级的数据");
         this.registerAndsetOption(this.myChart, cityId, name, mapJson, true);
+        this.ischengshi = false;
+      } else {
+        this.ischengshi = true;
       }
     },
     // 选择市级以后的
     changechengshi(e) {
-      console.log(e, "市级下面的数据");
+      // console.log(e, "市级下面的数据");
+      this.ischengshi = true;
+
       let name = this.chengshiList[e].name;
       let cityId = cityMap[name];
       if (cityId) {
@@ -421,8 +429,10 @@ export default {
         let response = require(`/static/json/map/${cityId}.json`);
         // this.chengshiList = this.initDataList(response)
         const mapJson = response;
-        console.log(response, "市级下面的数据");
+        // console.log(response, "市级下面的数据");
         this.registerAndsetOption(this.myChart, cityId, name, mapJson, true);
+      } else {
+        this.ischengshi = false;
       }
     },
     // 退出登录
@@ -436,6 +446,7 @@ export default {
         var map = this.mapStack.pop();
         let response = require(`/static/json/map/${map.mapId}.json`);
         const mapJson = response;
+
         this.registerAndsetOption(
           this.myChart,
           map.mapId,
@@ -443,10 +454,11 @@ export default {
           mapJson,
           false
         );
-
         //返回上一级后，父级的ID、Name随之改变
         this.parentId = map.mapId;
         this.parentName = map.mapName;
+
+        this.ischengshi = true;
         // });
       }
     },
@@ -454,9 +466,6 @@ export default {
     mapChart() {
       let response = require(`/static/json/map/${this.chinaId}.json`);
 
-      // axios
-      //   .get("./static/json/map/" + this.chinaId + ".json", {})
-      // .then((response) => {
       const mapJson = response;
       this.chinaJson = mapJson;
       this.myChart = this.$echarts.init(document.getElementById("sures"));
@@ -470,12 +479,23 @@ export default {
       this.parentId = this.chinaId;
       this.parentName = "china";
       this.myChart.on("click", (param) => {
-        // console.log("这是点击后的返回值", param);
         var cityId = cityMap[param.name];
+
+        // console.log("map.mapName", cityId);
+        // let cityId = cityMap[name];
+        // if (cityId) {}
         if (cityId) {
           //代表有下级地图
+
           let response = require(`/static/json/map/${cityId}.json`);
           const mapJson = response;
+
+          this.clickcityname = cityMap[mapJson.features[0].properties.name];
+          if (cityMap[mapJson.features[0].properties.name]) {
+            this.ischengshi = false;
+          } else {
+            this.ischengshi = true;
+          }
           this.registerAndsetOption(
             this.myChart,
             cityId,
@@ -485,6 +505,8 @@ export default {
           );
         } else {
           //没有下级地图，回到一级中国地图，并将mapStack清空
+          this.ischengshi = false;
+
           this.registerAndsetOption(
             this.myChart,
             this.chinaId,
@@ -499,7 +521,7 @@ export default {
       });
       // });
     },
-
+    havenextcity() {},
     registerAndsetOption(myChart, id, name, mapJson, flag) {
       this.$echarts.registerMap(name, mapJson);
       myChart.setOption({
@@ -517,16 +539,11 @@ export default {
             // 地图上的标签
             label: {
               show: true,
-              position: "top",
-              distance: 5,
+              position: ["50%", "50%"],
               color: "#fff",
               fontSize: "10",
-              align: "center",
-              verticalAlign: "middle",
+              formatter: "{b}",
             },
-
-            // name: 'name',
-            // colorBy: "series",
             center: undefined,
             // 地图本身
             itemStyle: {
@@ -546,23 +563,37 @@ export default {
                       color: "#353542", // 100% 处的颜色
                     },
                   ],
-                  globalCoord: false, // 缺为 false
                 },
-
-                // borderColor: "#1dc199",
-                // areaColor: "rgba(0,0,0,0)",bbbbc8
                 borderColor: "#b2b2bf",
                 borderWidth: 1,
                 shadowOffsetX: -2,
                 shadowOffsetY: 2,
                 shadowBlur: 10,
                 shadowColor: "rgba(128, 217, 248, .3)",
-                emphasis: {
-                  areaColor: "#1dc199",
-                  borderWidth: 1,
+              },
+              emphasis: {
+                areaColor: {
+                  type: "radial",
+                  x: 0.5,
+                  y: 0.5,
+                  r: 0.8,
+                  colorStops: [
+                    {
+                      offset: 0,
+                      color: "#7fb926", // 0% 处的颜色
+                    },
+                    {
+                      offset: 1,
+                      color: "#04614f", // 100% 处的颜色
+                    },
+                  ],
+                  globalCoord: false, // 缺为 false
                 },
+                color: "#fff",
+                borderWidth: 1,
               },
             },
+
             // 选中
             select: {
               disabled: false,
@@ -573,13 +604,48 @@ export default {
             },
             data: this.initMapData(mapJson),
             markPoint: {
-              symbol: "pin",
+              // this.ischengshi
+              symbol: this.ischengshi ? "pin" : "none",
               symbolSize: "50",
-              data: [{ name: "你是", coord: [112.733538, 38.41769] }],
-              // symbol:'image://https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fsrc.sotu114.com%2Fdata%2Fattachment%2Fforum%2F202006%2F09%2F190518g9jrk7x9d4ccpb0b.item.jpg-ture&refer=http%3A%2F%2Fsrc.sotu114.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1660981387&t=8becdef19f9d181145f1528e86dd065b'
+              selected: true,
+              data: [
+                {
+                  name: "测试电站名称",
+                  codsr: "电站代码：KSA32222117",
+                  codsr1: "电站容量：3000KW",
+                  value: 35,
+                  coord: [112.733538, 38.41769],
+                },
+              ],
+              label: {
+                show: true,
+                itemStyle: {
+                  color: "#fff",
+                },
+                formatter: "{c}",
+              },
+              tooltip: {
+                show: this.ischengshi,
+                trigger: "item",
+                formatter: (params) => {
+                  console.log(params);
+                  let str = " ";
+                  str = `
+                  <div class="bg-bgcardcolor fs15 br5 float-hidden m10">
+                    <div class="bg-main1 b-b-1 line-color-divider p10"> ${params.data.name}</div>
+                    <div class='b-b-1 line-color-divider p10' >${params.data.codsr}</div>
+                    <div class=" p10">${params.data.codsr1} </div>
+                 </div>`;
+                  return str;
+                },
+              },
             },
           },
         ],
+        tooltip: {
+          show: false,
+          trigger: "item",
+        },
       });
 
       if (flag) {
@@ -596,15 +662,28 @@ export default {
     initMapData(mapJson) {
       var mapData = [];
       for (var i = 0; i < mapJson.features.length; i++) {
-        mapData.push({
-          name: mapJson.features[i].properties.name,
-          id: mapJson.features[i].id,
-          // emphasis: {
-          //   disabled: false,
-          //   areaColor: "#fff",
-          //   backgroundColor: "#fff",
-          // },
-        });
+        if (
+          mapJson.features[i].properties.name == "山西" ||
+          mapJson.features[i].properties.name == "忻州市" ||
+          mapJson.features[i].properties.name == "忻府区"
+        ) {
+          mapData.push({
+            name: mapJson.features[i].properties.name,
+            groupId: mapJson.features[i].id,
+            selected: true,
+            value: 100,
+            labelLine: {
+              show: true,
+              showAbove: true,
+            },
+          });
+        } else {
+          mapData.push({
+            name: mapJson.features[i].properties.name,
+            id: mapJson.features[i].id,
+            value: 0,
+          });
+        }
       }
       return mapData;
     },

@@ -66,35 +66,38 @@
     .el-menu {
       border: none;
       height: 100%;
-      width: 90% !important;
-      margin: 0 auto;
-      // padding: 0 20px;
     }
 
-    // menu hover
+    // menu hover   // 主要按钮的选中背景颜色
     .submenu-title-noDropdown,
     .el-submenu__title {
-      border-radius: 5px;
+      // border-radius: 5px;
       &:hover {
-        
         background-color: $menuHover !important;
       }
     }
-
-    .is-active>.el-submenu__title {
-      color: $subMenuActiveText !important;
-    }
+    // 主要子元素被选中后的 主按钮颜色
+    // .is-active>.el-submenu__title {
+    //   color: $subMenuActiveText !important;
+    //   background: $subMenuActivebg !important;
+    // }
     .is-active {
-      background: $subMenuActivebg !important;
+      background-color: $subMenuActivebg !important;
       // border-radius: 5px;
+      // height: 45px ;
+      // line-height: 45px !important;
     }
-
+    .is-opened{
+      color: $subMenuActivebg !important;
+      background: none !important;
+    }
     & .nest-menu .el-submenu>.el-submenu__title,
     & .el-submenu .el-menu-item {
       min-width: $sideBarWidth !important;
-      background-color: $subMenuBg !important;
+
+
+      // background-color: $subMenuBg !important;
       &:hover {
-        
         background-color: $subMenuHover !important;
       }
     }

@@ -70,6 +70,13 @@ export default {
   .el-dropdown-menu__item {
     color: #fff;
   }
+  // .el-dropdown-menu__item :hover {
+
+  // }
+  .el-dropdown-menu__item:not(.is-disabled):hover {
+    background: #7fb926;
+    color: #fff;
+  }
 }
 
 .el-input__inner {
@@ -81,22 +88,22 @@ export default {
 
 // 表格
 .el-table {
-  tr {
-    background: #204767;
-    color: #fff;
-  }
+  // tr {
+  //   background: #363543;
+  //   color: #fff;
+  // }
   td {
     border: none !important;
   }
   th {
-    background: #204767;
+    background: #363543;
     border: none !important;
   }
-  .slecleRowColor {
-    background: #204767 !important;
-  }
+  // .slecleRowColor {
+  //   background: #363543 !important;
+  // }
   tbody tr:hover > td {
-    background-color: #00c8c8 !important;
+    background-color: #2d2d2d !important;
   }
 }
 .el-table::before {

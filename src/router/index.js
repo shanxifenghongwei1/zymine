@@ -135,6 +135,33 @@ export const constantRoutes = [
       },
     ],
   },
+
+  // 储能数据
+  {
+    path: "/pcsany",
+    component: Layout,
+    redirect: "/pcsany/pcsnums",
+    name: "pcsany",
+    meta: {
+      title: "实时数据",
+      icon: "excel",
+    },
+    children: [
+      {
+        path: "/pcsany/pcsnums",
+        component: () => import("@/views/pcsany/pcsnums.vue"),
+        name: "pcsnums",
+        meta: { title: "EMS 实时数据", noCache: true },
+      },
+      {
+        path: "/pcsany/pcsBattery",
+        component: () => import("@/views/pcsany/pcsBattery"),
+        name: "pcsBattery",
+        meta: { title: "电池" },
+      },
+    ],
+  },
+
   {
     path: "/",
     component: Layout,
