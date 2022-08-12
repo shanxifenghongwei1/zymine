@@ -1,7 +1,7 @@
 <template>
   <div class="emsx">
     <!-- 上面的tab -->
-    <div class="flex color-white1 fathertab">
+    <!-- <div class="flex color-white1 fathertab">
       <div
         class="p10 fs18 changheand"
         :class="active == index ? 'acticve' : ''"
@@ -11,7 +11,8 @@
       >
         {{ item.name }}
       </div>
-    </div>
+    </div> -->
+    <div class="color-white fs20 pl10 fw600">光伏实时数据</div>
     <div class="color-white pl10 pt20">
       <div v-for="(item, index) in blockList" :key="index">
         <div class="disrackion flex flex-wrap flex-col">

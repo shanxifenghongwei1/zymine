@@ -1,8 +1,8 @@
 <template>
-  <div class="aaa">
+  <div class="aaa" :class="classObj">
     <dv-full-screen-container>
       <div class="aaas flex">
-        <div>
+        <div v-if="leftshow">
           <sidebar class="sidebar-container" />
         </div>
         <!-- <router-link to="/"
@@ -14,7 +14,17 @@
           <div class="handertop flex flex-between">
             <!-- 左面文字 -->
             <div>
-              <div class="fs23 pt20">卓阳能源集团综合能源管理平台</div>
+              <div class="fs23 pt20">
+                <div class="flex align-items-center">
+                  <hamburger
+                    id="hamburger-container"
+                    :is-active="sidebar.opened"
+                    class="hamburger-container"
+                    @toggleClick="toggleSideBar"
+                  />
+                  <div>卓阳能源集团综合能源管理平台</div>
+                </div>
+              </div>
               <div class="pt10 color-colortexts">
                 <i class="el-icon-location-outline fs20" /> 中国
                 <span>数据跟新时间 {{ timetotop }}</span>
@@ -349,9 +359,10 @@ import chinamaps from "/static/json/map/100000.json";
 import { mapState, mapGetters } from "vuex";
 import sidebar from "@/layout/components/Sidebar/index.vue";
 import Screenfull from "@/components/Screenfull";
+import Hamburger from "@/components/Hamburger";
 export default {
   name: "bighomes",
-  components: { sidebar, Screenfull },
+  components: { sidebar, Screenfull, Hamburger },
   props: {
     msg: String,
   },
@@ -396,13 +407,17 @@ export default {
       timetotop: "获取中..", // 时间
       intervals: null,
       ischengshi: false,
+      issheng: false,
       clickcityname: "",
+      leftshow: true,
     };
   },
   methods: {
     changetime() {},
     // 选择省之后的结果
     changeproview(e) {
+      this.ischengshi = false;
+      this.issheng = true;
       let name = this.anysityList[e].name;
       let cityId = cityMap[name];
       if (cityId) {
@@ -412,16 +427,13 @@ export default {
         const mapJson = response;
         // console.log(response, "市级的数据");
         this.registerAndsetOption(this.myChart, cityId, name, mapJson, true);
-        this.ischengshi = false;
-      } else {
-        this.ischengshi = true;
       }
     },
     // 选择市级以后的
     changechengshi(e) {
       // console.log(e, "市级下面的数据");
       this.ischengshi = true;
-
+      this.issheng = false;
       let name = this.chengshiList[e].name;
       let cityId = cityMap[name];
       if (cityId) {
@@ -431,8 +443,6 @@ export default {
         const mapJson = response;
         // console.log(response, "市级下面的数据");
         this.registerAndsetOption(this.myChart, cityId, name, mapJson, true);
-      } else {
-        this.ischengshi = false;
       }
     },
     // 退出登录
@@ -458,7 +468,7 @@ export default {
         this.parentId = map.mapId;
         this.parentName = map.mapName;
 
-        this.ischengshi = true;
+        // this.ischengshi = true;
         // });
       }
     },
@@ -493,8 +503,10 @@ export default {
           this.clickcityname = cityMap[mapJson.features[0].properties.name];
           if (cityMap[mapJson.features[0].properties.name]) {
             this.ischengshi = false;
+            this.issheng = true;
           } else {
             this.ischengshi = true;
+            this.issheng = false;
           }
           this.registerAndsetOption(
             this.myChart,
@@ -506,7 +518,7 @@ export default {
         } else {
           //没有下级地图，回到一级中国地图，并将mapStack清空
           this.ischengshi = false;
-
+          this.issheng = false;
           this.registerAndsetOption(
             this.myChart,
             this.chinaId,
@@ -605,16 +617,27 @@ export default {
             data: this.initMapData(mapJson),
             markPoint: {
               // this.ischengshi
-              symbol: this.ischengshi ? "pin" : "none",
-              symbolSize: "50",
+              // symbol: this.issheng ? "pin" : this.ischengshi ? "pin" : "none",
+              symbol: "pin",
+              // symbolSize: this.issheng ? "50" : "30",
+              symbolSize: this.ischengshi ? "30" : "50",
               selected: true,
               data: [
                 {
-                  name: "测试电站名称",
+                  name: "山西电站名称",
                   codsr: "电站代码：KSA32222117",
                   codsr1: "电站容量：3000KW",
-                  value: 35,
+                  value: this.ischengshi ? "" : "15",
                   coord: [112.733538, 38.41769],
+                },
+                {
+                  name: "江苏电站名称",
+                  codsr: "电站代码：KSA32222117",
+                  codsr1: "电站容量：3000KW",
+                  // value: this.issheng ? "35" : "",
+                  value: this.ischengshi ? "" : "20",
+
+                  coord: [119.97, 31.83],
                 },
               ],
               label: {
@@ -665,7 +688,10 @@ export default {
         if (
           mapJson.features[i].properties.name == "山西" ||
           mapJson.features[i].properties.name == "忻州市" ||
-          mapJson.features[i].properties.name == "忻府区"
+          mapJson.features[i].properties.name == "忻府区" ||
+          mapJson.features[i].properties.name == "江苏" ||
+          mapJson.features[i].properties.name == "常州市" ||
+          mapJson.features[i].properties.name == "新北区"
         ) {
           mapData.push({
             name: mapJson.features[i].properties.name,
@@ -849,6 +875,13 @@ export default {
         this.timetotop = new Date().Format("yyyy.MM.dd hh:mm:ss");
       }, 1000);
     },
+
+    // toggleSideBar() {
+    //   this.leftshow = !this.leftshow;
+    // },
+    toggleSideBar() {
+      this.$store.dispatch("app/toggleSideBar");
+    },
   },
   mounted() {
     setTimeout(() => {
@@ -864,7 +897,8 @@ export default {
     ...mapState({
       sidebar: (state) => state.app.sidebar,
     }),
-    ...mapGetters(["avatar"]),
+
+    ...mapGetters(["avatar", "sidebar"]),
     classObj() {
       return {
         hideSidebar: !this.sidebar.opened,

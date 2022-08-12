@@ -48,7 +48,7 @@
       >
         <svg-icon
           icon-class="rightcolor"
-          :class="index == colorblackcurrent ? 'svgcloor' : 'svgcloor1'"
+          :class="item.ischicked ? 'svgcloor' : 'svgcloor1'"
         />
         {{ item.name }}
       </div>
@@ -100,11 +100,11 @@ export default {
   data() {
     return {
       colorblack: [
-        { name: "全部", id: 0 },
-        { name: "运行", id: 1 },
-        { name: "规划", id: 2 },
-        { name: "故障", id: 3 },
-        { name: "离网", id: 4 },
+        { name: "全部", id: 0, ischicked: true },
+        { name: "运行", id: 1, ischicked: true },
+        { name: "规划", id: 2, ischicked: true },
+        { name: "故障", id: 3, ischicked: true },
+        { name: "离网", id: 4, ischicked: true },
       ],
       colorblackcurrent: 0,
       options: [
@@ -176,7 +176,24 @@ export default {
   },
   methods: {
     chnagcolorlist(index) {
-      this.colorblackcurrent = index;
+      let any = this.colorblack[index];
+      console.log(any);
+      if (any.id == 0) {
+        if (any.ischicked) {
+          this.colorblack.forEach((items) => {
+            items.ischicked = false;
+          });
+        } else {
+          this.colorblack.forEach((items) => {
+            items.ischicked = true;
+          });
+        }
+      } else {
+        this.colorblack[index].ischicked = !this.colorblack[index].ischicked;
+        if (!this.colorblack[index].ischicked) {
+          this.colorblack[0].ischicked = false;
+        }
+      }
     },
   },
 };
