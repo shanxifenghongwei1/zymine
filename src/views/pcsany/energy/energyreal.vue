@@ -1,30 +1,71 @@
 <template>
   <div class="emsx">
-    <!-- 上面的tab -->
-    <div class="flex color-white1 fathertab">
-      <div
-        class="p10 fs18 changheand"
-        :class="active == index ? 'acticve' : ''"
-        v-for="(item, index) in topdataList"
-        :key="index"
-        @click="changeactive(index)"
-      >
-        {{ item.name }}
+    <!-- 上面的tab   PCS 页面-->
+    <div class="flex">
+      <div class="flex align-items-center">
+        <div class="color-white1">系统</div>
+        <div class="bg-bgcardcolor ml30">
+          <el-select v-model="value" placeholder="请选择">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            >
+            </el-option>
+          </el-select>
+        </div>
+      </div>
+      <!-- // 下面的PCS -->
+      <div class="flex align-items-center ml50">
+        <div class="color-white1">PCS</div>
+        <div class="bg-bgcardcolor ml30">
+          <el-select v-model="value" placeholder="请选择">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            >
+            </el-option>
+          </el-select>
+        </div>
       </div>
     </div>
-    <div class="color-white pl10 pt20">
-      <div v-for="(item, index) in blockList" :key="index">
-        <div class="disrackion flex flex-wrap flex-col">
+    <!-- 下面的DCDC DCAC  -->
+    <div class="flex flex-start">
+      <div class="w40 h700p bg-bgcardcolor ml65 mt30 color-white1">
+        <div class="bglu pl20 pr20 pt10 pb10">DCDC</div>
+        <div class="pl20 pr20 pt30">
           <div
-            v-for="(andnum, listnum) in item"
-            :key="listnum"
-            class="flex flex-between align-items-center fatherbox"
+            class="flex flex-between align-items-center pb3"
+            v-for="(item, index) in contentList"
+            :key="index"
           >
-            <div class="">{{ andnum.name }}</div>
+            <div>{{ item.name }}</div>
             <div
-              class="bg-bgcardcolor text-center rightbox b-a-1 line-color-main2"
+              :class="index % 2 == 0 ? 'hui' : 'hei'"
+              class="sonsbox pt10 pb10 text-center"
             >
-              {{ andnum.value }}
+              {{ item.value }} <span>{{ item.plase }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="w40 h700p bg-bgcardcolor ml65 mt30 color-white1">
+        <div class="bglu pl20 pr20 pt10 pb10">DCDC</div>
+        <div class="pl20 pr20 pt30">
+          <div
+            class="flex flex-between align-items-center pb3"
+            v-for="(item, index) in contentList"
+            :key="index"
+          >
+            <div>{{ item.name }}</div>
+            <div
+              :class="index % 2 == 0 ? 'hui' : 'hei'"
+              class="sonsbox pt10 pb10 text-center"
+            >
+              {{ item.value }} <span>{{ item.plase }}</span>
             </div>
           </div>
         </div>
@@ -36,25 +77,90 @@
 export default {
   data() {
     return {
-      topdataList: [
-        { name: "遥测量", id: 0 },
-        { name: "遥信量", id: 1 },
-        { name: "电度量", id: 2 },
+      options: [
+        {
+          value: "选项1",
+          label: "黄金糕",
+        },
+        {
+          value: "选项2",
+          label: "双皮奶",
+        },
+        {
+          value: "选项3",
+          label: "蚵仔煎",
+        },
+        {
+          value: "选项4",
+          label: "龙须面",
+        },
+        {
+          value: "选项5",
+          label: "北京烤鸭",
+        },
       ],
-      active: 0,
-      blockList: [
-        [
-          { name: "直流线路一：直流功率", id: 0, value: "10" },
-          { name: "直流线路一：直流电压", id: 1, value: "20" },
-          { name: "直流线路一：直流电流", id: 2, value: "20" },
-          { name: "最大充电电流", id: 3, value: "20" },
-          { name: "最大放电电流", id: 4, value: "36" },
-        ],
-        [
-          { name: "变压器A相温度", id: 0, value: "1" },
-          { name: "变压器B相温度", id: 1, value: "1.0.0" },
-          { name: "变压器C相温度", id: 2, value: "1.0.0" },
-        ],
+      value: "",
+      contentList: [
+        {
+          name: "电池电压",
+          value: "100",
+          plase: "kw",
+          id: 0,
+        },
+        {
+          name: "电池电流",
+          value: "1625.0 ",
+          plase: "V",
+          id: 1,
+        },
+        {
+          name: "电池功率",
+          value: "100",
+          plase: "W",
+          id: 2,
+        },
+        {
+          name: "IGBT温度",
+          value: "30",
+          plase: "℃",
+          id: 3,
+        },
+        {
+          name: "环境温度",
+          value: "28",
+          plase: "℃",
+          id: 4,
+        },
+        {
+          name: "当前可用容量",
+          value: "10",
+          plase: "kw",
+          id: 5,
+        },
+        {
+          name: "最大可充电功率",
+          value: "1625",
+          plase: "kw",
+          id: 6,
+        },
+        {
+          name: "最大可放电功率",
+          value: "125",
+          plase: "kw",
+          id: 7,
+        },
+        {
+          name: "最大可用感性无功功率",
+          value: "125",
+          plase: "kw",
+          id: 8,
+        },
+        {
+          name: "最大可用容性无功功率",
+          value: "125",
+          plase: "kw",
+          id: 9,
+        },
       ],
     };
   },
@@ -68,32 +174,28 @@ export default {
 <style lang="scss" scoped>
 .emsx {
   padding: 50px;
+  height: 100%;
 }
-.disrackion {
-  height: 250px;
-}
-.rightbox {
-  width: 250px;
-  line-height: 50px;
-}
-.fatherbox {
+.w40 {
   width: 30%;
 }
-.acticve {
-  color: #fff;
-  position: relative;
-  &::after {
-    display: block;
-    content: "";
-    position: absolute;
-    bottom: 0px;
-    left: 50%;
-    transform: translateX(-50%);
-    // animation: clipAnimate 3s linear infinite;
-    width: 35px;
-    height: 5px;
-    border-radius: 10px;
-    background: #7fb926;
-  }
+.h700p {
+  height: 650px;
+}
+.bglu {
+  background: #49651b;
+}
+
+.sonsbox {
+  width: 200px;
+  background: #fff;
+}
+
+.hui {
+  background: #464652;
+}
+
+.hei {
+  background: #2f2f37;
 }
 </style>
