@@ -32,6 +32,12 @@ export default {
   position: relative;
   overflow: hidden;
   background: #2d2d2d;
+
+  // 全局适配的滚动
+  // height: 100vh;
+  // overflow: hidden;
+  // overflow-y: scroll;
+
   // background: $colorblacks;
 }
 

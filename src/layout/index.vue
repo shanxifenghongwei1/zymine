@@ -1,4 +1,5 @@
 <template>
+  <!-- <dv-full-screen-container> -->
   <div :class="classObj" class="app-wrapper">
     <div
       v-if="device === 'mobile' && sidebar.opened"
@@ -15,12 +16,15 @@
         <!-- 页面的多开页面栏目   页面缓存 -->
         <tags-view v-if="needTagsView" />
       </div>
+
       <app-main />
+
       <right-panel v-if="showSettings">
         <settings />
       </right-panel>
     </div>
   </div>
+  <!-- </dv-full-screen-container> -->
 </template>
 
 <script>

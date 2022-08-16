@@ -189,6 +189,20 @@ export const constantRoutes = [
     ],
   },
 
+  // 曲线查询
+  {
+    path: "/curve",
+    component: Layout,
+    children: [
+      {
+        path: "index",
+        component: () => import("@/views/curve/index"),
+        name: "curve",
+        meta: { title: "曲线查询", icon: "quxian", noCache: true },
+      },
+    ],
+  },
+
   {
     path: "/",
     component: Layout,

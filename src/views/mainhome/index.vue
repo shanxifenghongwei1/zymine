@@ -80,10 +80,12 @@ export default {
     };
   },
   mounted() {
-    var ele = document.getElementById("canvas");
-    ele.width = "900"; //注意：没有单位
-    ele.height = "660"; //注意：没有单位
-    this.canvasinit();
+    setTimeout(() => {
+      var ele = document.getElementById("canvas");
+      ele.width = "900"; //注意：没有单位
+      ele.height = "660"; //注意：没有单位
+      this.canvasinit();
+    }, 500);
   },
   methods: {
     canvasinit() {
