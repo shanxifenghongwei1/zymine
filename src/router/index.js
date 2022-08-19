@@ -184,6 +184,12 @@ export const constantRoutes = [
             name: "team",
             meta: { title: "电池簇" },
           },
+          {
+            path: "/pcsany/energy/singleCell",
+            component: () => import("@/views/pcsany/energy/singleCell"),
+            name: "singleCell",
+            meta: { title: "单体电池" },
+          },
         ],
       },
     ],

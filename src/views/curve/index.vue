@@ -34,19 +34,20 @@ export default {
           bottom: "3%",
           containLabel: true,
         },
-        toolbox: {
-          feature: {
-            saveAsImage: {},
-          },
-        },
+
         xAxis: {
           type: "category",
           boundaryGap: false,
           data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
         },
-        yAxis: {
-          type: "value",
-        },
+        yAxis: [
+          {
+            type: "value",
+          },
+          {
+            type: "value",
+          },
+        ],
         series: [
           {
             name: "Email",
