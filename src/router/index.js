@@ -209,6 +209,20 @@ export const constantRoutes = [
     ],
   },
 
+  // 电站信息
+  {
+    path: "/transtaion",
+    component: Layout,
+    children: [
+      {
+        path: "index",
+        component: () => import("@/views/transtaion/index"),
+        name: "transtaion",
+        meta: { title: "电站信息", icon: "dzjbxx", noCache: true },
+      },
+    ],
+  },
+
   {
     path: "/",
     component: Layout,
