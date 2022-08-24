@@ -83,7 +83,7 @@
 </template>
 
 <script>
-import collitems from "./components/collitems";
+import collitems from "../transtaion/components/collitems.vue";
 export default {
   components: {
     collitems,

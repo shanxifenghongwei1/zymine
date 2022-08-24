@@ -223,6 +223,20 @@ export const constantRoutes = [
     ],
   },
 
+  // 控制策略
+  {
+    path: "/strategy",
+    component: Layout,
+    children: [
+      {
+        path: "index",
+        component: () => import("@/views/strategy/index"),
+        name: "strategy",
+        meta: { title: "控制策略", icon: "dzjbxx", noCache: true },
+      },
+    ],
+  },
+
   {
     path: "/",
     component: Layout,
