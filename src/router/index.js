@@ -190,6 +190,18 @@ export const constantRoutes = [
             name: "singleCell",
             meta: { title: "单体电池" },
           },
+          {
+            path: "/pcsany/energy/gateway",
+            component: () => import("@/views/pcsany/energy/gateway"),
+            name: "gateway",
+            meta: { title: "关口电表实时数据" },
+          },
+          {
+            path: "/pcsany/energy/network",
+            component: () => import("@/views/pcsany/energy/network"),
+            name: "network",
+            meta: { title: "并网点实时数据" },
+          },
         ],
       },
     ],
