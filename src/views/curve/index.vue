@@ -25,8 +25,17 @@ export default {
         tooltip: {
           trigger: "axis",
         },
+
         legend: {
-          data: ["Email", "Union Ads", "Video Ads", "Direct", "Search Engine"],
+          data: [
+            "理论SCO",
+            "SCO",
+            "电网功率",
+            "PV发电功率",
+            "负载用电功率",
+            "并网点功率",
+            "储能电量",
+          ],
         },
         grid: {
           left: "3%",
@@ -38,7 +47,7 @@ export default {
         xAxis: {
           type: "category",
           boundaryGap: false,
-          data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+          data: this.timelist(),
         },
         yAxis: [
           {
@@ -50,39 +59,69 @@ export default {
         ],
         series: [
           {
-            name: "Email",
+            name: "理论SCO",
             type: "line",
-            stack: "Total",
-            data: [120, 132, 101, 134, 90, 230, 210],
+            data: this.dataLists(),
+            areaStyle: {},
           },
           {
-            name: "Union Ads",
+            name: "SCO",
             type: "line",
-            stack: "Total",
-            data: [220, 182, 191, 234, 290, 330, 310],
+            data: this.dataLists(),
+            areaStyle: {},
           },
           {
-            name: "Video Ads",
+            name: "电网功率",
             type: "line",
-            stack: "Total",
-            data: [150, 232, 201, 154, 190, 330, 410],
+            data: this.dataLists(),
+            areaStyle: {},
           },
           {
-            name: "Direct",
+            name: "PV发电功率",
             type: "line",
-            stack: "Total",
-            data: [320, 332, 301, 334, 390, 330, 320],
+            data: this.dataLists(),
+            areaStyle: {},
           },
           {
-            name: "Search Engine",
+            name: "负载用电功率",
             type: "line",
-            stack: "Total",
-            data: [820, 932, 901, 934, 1290, 1330, 1320],
+            data: this.dataLists(),
+            areaStyle: {},
+          },
+          {
+            name: "并网点功率",
+            type: "line",
+            data: this.dataLists(),
+            areaStyle: {},
+          },
+          {
+            name: "储能电量",
+            type: "line",
+            data: this.dataLists(),
+            areaStyle: {},
           },
         ],
       };
 
       myChart.setOption(option);
+    },
+    timelist() {
+      let a = [];
+      for (let i = 0; i < 24; i++) {
+        if (i < 10) {
+          a.push("0" + i + ":00");
+        } else {
+          a.push(i + ":00");
+        }
+      }
+      return a;
+    },
+    dataLists() {
+      let a = [];
+      for (let i = 0; i < 24; i++) {
+        a.push(Math.floor(Math.random() * 90 + 60));
+      }
+      return a;
     },
   },
 };

@@ -194,13 +194,33 @@ export const constantRoutes = [
             path: "/pcsany/energy/gateway",
             component: () => import("@/views/pcsany/energy/gateway"),
             name: "gateway",
-            meta: { title: "关口电表实时数据" },
+            meta: { title: "关口电表" },
           },
           {
             path: "/pcsany/energy/network",
             component: () => import("@/views/pcsany/energy/network"),
             name: "network",
-            meta: { title: "并网点实时数据" },
+            meta: { title: "并网点" },
+          },
+
+          {
+            path: "/pcsany/energy/meter",
+            component: () => import("@/views/pcsany/energy/meter"),
+            name: "meter",
+            meta: { title: "高压侧用电电表" },
+          },
+
+          {
+            path: "/pcsany/energy/fireControl",
+            component: () => import("@/views/pcsany/energy/fireControl"),
+            name: "fireControl",
+            meta: { title: "消防" },
+          },
+          {
+            path: "/pcsany/energy/aiConditioner",
+            component: () => import("@/views/pcsany/energy/aiConditioner"),
+            name: "aiConditioner",
+            meta: { title: "空调" },
           },
         ],
       },
@@ -252,15 +272,15 @@ export const constantRoutes = [
   {
     path: "/",
     component: Layout,
-    redirect: "/dashboard",
-    children: [
-      {
-        path: "dashboard",
-        component: () => import("@/views/dashboard/index"),
-        name: "Dashboard",
-        meta: { title: "dashboard", icon: "dashboard", affix: true },
-      },
-    ],
+    redirect: "/bighomea",
+    // children: [
+    //   {
+    //     path: "dashboard",
+    //     component: () => import("@/views/dashboard/index"),
+    //     name: "Dashboard",
+    //     meta: { title: "dashboard", icon: "dashboard", affix: true },
+    //   },
+    // ],
   },
   {
     path: "/documentation",
