@@ -245,12 +245,19 @@ export const constantRoutes = [
   {
     path: "/transtaion",
     component: Layout,
+    meta: { title: "电站信息", icon: "dzjbxx", noCache: true },
     children: [
       {
         path: "index",
         component: () => import("@/views/transtaion/index"),
         name: "transtaion",
         meta: { title: "电站信息", icon: "dzjbxx", noCache: true },
+      },
+      {
+        path: "adminTranstaion",
+        component: () => import("@/views/transtaion/adminTranstaion"),
+        name: "adminTranstaion",
+        meta: { title: "电站管理", icon: "dzjbxx", noCache: true },
       },
     ],
   },

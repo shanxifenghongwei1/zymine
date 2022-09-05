@@ -27,7 +27,7 @@
               </div>
               <div class="pt10 color-colortexts">
                 <i class="el-icon-location-outline fs20" /> 中国
-                <span>数据跟新时间 {{ timetotop }}</span>
+                <span>数据更新时间 {{ timetotop }}</span>
               </div>
             </div>
             <!-- 右边头像 -->
