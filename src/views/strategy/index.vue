@@ -2,7 +2,107 @@
   <div class="mainbox">
     <div class="pl15 pr15 pt20 color-white">
       <collitems title="自发自用">
-        <div></div>
+        <div class="p15">
+          <div class="flex flex-around">
+            <div class="flex align-items-center wid-200">
+              <div class="pr15">平电价</div>
+              <div class="b-a-1 line-color-main1">
+                <el-input v-model="input" placeholder="请输入内容"></el-input>
+              </div>
+            </div>
+
+            <div class="flex align-items-center">
+              <div class="pr15">峰电价</div>
+              <div class="b-a-1 line-color-main1">
+                <el-input v-model="input" placeholder="请输入内容"></el-input>
+              </div>
+            </div>
+
+            <div class="flex align-items-center">
+              <div class="pr15">谷电价</div>
+              <div class="b-a-1 line-color-main1">
+                <el-input v-model="input" placeholder="请输入内容"></el-input>
+              </div>
+            </div>
+
+            <div class="flex align-items-center">
+              <div class="pr15">尖电价</div>
+              <div class="b-a-1 line-color-main1">
+                <el-input v-model="input" placeholder="请输入内容"></el-input>
+              </div>
+            </div>
+
+            <div class="flex align-items-center">
+              <div class="pr15">卖电价格</div>
+              <div class="b-a-1 line-color-main1">
+                <el-input v-model="input" placeholder="请输入内容"></el-input>
+              </div>
+            </div>
+
+            <el-button type="primary">保存设置</el-button>
+          </div>
+
+          <div class="pt30">
+            <div class="p15">
+              <div class="flex align-items-center">
+                <div class="flex align-items-center">
+                  <div class="pr15">时间范围</div>
+                  <div class="b-a-1 line-color-main1">
+                    <el-time-select
+                      placeholder="起始时间"
+                      v-model="startTime"
+                      :picker-options="{
+                        start: '00:00',
+                        step: '01:00',
+                        end: '23:00',
+                      }"
+                    >
+                    </el-time-select>
+                  </div>
+                  <div class="b-a-1 line-color-main1">
+                    <el-time-select
+                      placeholder="结束时间"
+                      v-model="endTime"
+                      :picker-options="{
+                        start: '00:00',
+                        step: '01:00',
+                        end: '23:30',
+                        minTime: startTime,
+                      }"
+                    >
+                    </el-time-select>
+                  </div>
+                </div>
+
+                <div class="pl30">
+                  <div class="flex align-items-center">
+                    <div class="pr30">类型</div>
+                    <div class="b-a-1 line-color-main1">
+                      <el-select v-model="value" placeholder="请选择">
+                        <el-option
+                          v-for="item in options"
+                          :key="item.value"
+                          :label="item.label"
+                          :value="item.value"
+                        >
+                        </el-option>
+                      </el-select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="flex">
+                  <div class="boxrows add" @click="addtime">
+                    <i class="el-icon-plus" />
+                  </div>
+                  <div class="boxrows dels">
+                    <i class="el-icon-minus" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </collitems>
 
       <collitems title="充放电时段参数">
@@ -108,6 +208,24 @@ export default {
           sbsl: 2,
         },
       ],
+      input: "",
+      startTime: "",
+      endTime: "",
+      options: [
+        {
+          value: "选项1",
+          label: "谷时段",
+        },
+        {
+          value: "选项2",
+          label: "峰时段",
+        },
+        {
+          value: "选项3",
+          label: "平时段",
+        },
+      ],
+      value: "",
     };
   },
 
@@ -122,5 +240,25 @@ export default {
 }
 .plant1 {
   width: 180px;
+}
+
+.wid-200 {
+  width: 260px;
+}
+
+.boxrows {
+  width: 30px;
+  height: 30px;
+  // background: #fff;
+
+  line-height: 30px;
+  text-align: center;
+  margin-left: 50px;
+}
+.add {
+  background-color: #7fb926;
+}
+.dels {
+  background-color: red;
 }
 </style>

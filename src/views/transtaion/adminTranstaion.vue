@@ -135,8 +135,11 @@
               class="width-full height"
               fit="cover"
             ></el-image>
-
-            <div class="absolute right5 top p10 bg-main1 br50">
+            <!-- 关闭按钮 -->
+            <div
+              class="absolute right5 top p10 bg-main1 br50"
+              @click="deletepic(index)"
+            >
               <i class="el-icon-close" />
             </div>
           </div>
@@ -145,6 +148,12 @@
             v-if="imglist.length < 3"
             class="p15 b-a-1 line-color-main2 relative flex-1"
           >
+            <input
+              class="upinput absolute"
+              @change="showimg"
+              ref="file"
+              type="file"
+            />
             <div class="absolute axis-center">
               <i class="fs20 el-icon-upload2" /> 上传
             </div>
@@ -229,6 +238,19 @@ export default {
       });
       return a;
     },
+    // 删除图片
+    deletepic(index) {
+      this.imglist.splice(index, 1);
+    },
+    showimg(file) {
+      console.log(file.target.files[0], "file");
+      let fileObj = file.target.files[0];
+      let formData = new FormData();
+      formData.append("file", fileObj);
+      formData.append("name", fileObj.name);
+
+      // formData  是需要在接口里上传 的
+    },
   },
 };
 </script>
@@ -245,5 +267,12 @@ export default {
 }
 .width-1200 {
   width: 800px;
+}
+
+.upinput {
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  z-index: 100;
 }
 </style>

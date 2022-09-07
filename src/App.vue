@@ -109,4 +109,9 @@ export default {
 .el-table::before {
   background: none !important;
 }
+
+// 控制策略页面
+.time-select-item:hover {
+  background-color: #393948 !important;
+}
 </style>
